@@ -1,0 +1,9 @@
+.chartWrapper {
+  width:100%;
+  overflow-x: scroll;
+}
+
+.myChart {
+  width:8000px;
+  height:450px;
+}
