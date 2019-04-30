@@ -36,10 +36,8 @@ var studentData ={
   "aggregates": null
 };
 
-
 // 取出資料
 // 0.机构名称, 1.科室, 2.科室人数,3.登入次数,4.登入平均时长(时/次), 5.总练习次数, 6.练习平均分数, 7.考试平均分数
-
 var IntStudentNumber = studentData.data.length;
 
 var HospitalName=[]
@@ -89,55 +87,72 @@ function render() {
   myChart = new Chart(canvas, {
               type: 'bar',
               data: {
-                  labels: departmentNameList,
-                  datasets: [{
-                      label: '',
-                      data: numberOfdepartments,
-                  }]
+                labels: departmentNameList,
+                datasets: [{
+                  label: '科室人數',
+                  data: numberOfdepartments,
+                }]
               },
               options: {
-                  plugins:{
-                      labels:{
-                          render:'value'
-                      }
-                  },
-                  maintainAspectRatio: false,
-                  scales: {
-                      xAxes: [{
-                          categorySpacing: 10,
-                      }]
+                plugins:{
+                  labels:{
+                    render:'value',
                   }
+                },
+                legend: {
+                  position: 'left'
+                },
+                maintainAspectRatio: false,
+                scales: {
+                  xAxes: [{
+                    categorySpacing: 10,
+                  }]
+                }
               },
               });
-}
+  }
 render()
 
-
 // 圖表更新
-function ChartUpdata(newYaxisData) {
-  myChart.config.data.datasets[0].data = newYaxisData;
+function ChartUpdata(newYaxisData,labelName) {
+  var Data = [{
+    label:labelName,
+    data: newYaxisData
+  }]
+  myChart.config.data.datasets = Data
   myChart.update();
 }
+
+var Score= [
+  {
+    label: "練習平均分數",
+    backgroundColor: "pink",
+    data: averagePracticeScore
+  },
+  {
+    label: "考試平均分數",
+    backgroundColor: "gray",
+    data: averageExamScore 
+  }
+]
 
 function changemodel(id){
     switch(id){
     case 1:
-      ChartUpdata(numberOfdepartments)
+      ChartUpdata(numberOfdepartments,"科室人数")
       break;
     case 2:
-      ChartUpdata(totalLoginTimes)
+      ChartUpdata(totalLoginTimes,"登入次数")
       break;
     case 3:
-      ChartUpdata(averageLoginTime)
+      ChartUpdata(averageLoginTime,"登入平均时长(时/次)")
       break;
     case 4:
-      ChartUpdata(totalPracticeTimes)
+      ChartUpdata(totalPracticeTimes,"总练习次数")
       break;
     case 5:
-      ChartUpdata(averagePracticeScore)
-      break;
-    case 6:
-      ChartUpdata(averageExamScore)
+      myChart.config.data.datasets = Score;
+      myChart.update();
       break;
     }
 };

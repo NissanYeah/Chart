@@ -172,7 +172,7 @@ function render(){
         data: {
             labels: studentNameList,
             datasets: [{
-                label: '',
+                label: '登入次數',
                 data: totalLoginTimes,
             }]
         },
@@ -182,6 +182,9 @@ function render(){
                     render:'value'
                 }
             },
+            legend: {
+                position: 'left'
+              },
             maintainAspectRatio: false,
             scales: {
                 xAxes: [{
@@ -196,28 +199,29 @@ render()
 
 // 圖表更新
 
-function ChartUpdata(newYaxisData) {
+function ChartUpdata(newYaxisData,labelName) {
     myChart.config.data.datasets[0].data = newYaxisData;
+    myChart.config.data.datasets[0].label = labelName;
     myChart.update();
   }
 
 function changemodel(id){
     switch(id){
     case 1:
-        ChartUpdata(totalLoginTimes)
+        ChartUpdata(totalLoginTimes,"登入次數")
         break;
     case 2:
-        ChartUpdata(loginFrequence)
+        ChartUpdata(loginFrequence,"登入頻率")
         break;
     case 3:
-        ChartUpdata(averageLoginTime)
+        ChartUpdata(averageLoginTime,"平均登入時常")
         break;
     case 4:
-        ChartUpdata(mostLongTime)
+        ChartUpdata(mostLongTime,"最長時間（天）")
         render()
         break;
     case 5:
-        ChartUpdata(mostShortTime)
+        ChartUpdata(mostShortTime,"最短時間（天）")
         render()
         break;
     }

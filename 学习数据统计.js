@@ -130,9 +130,7 @@ var studentData = {"data": [
 
 // 取出資料
 // 0.机构名称, 1.姓名, 2.登入次数,3.登入平均时长(时/次),4.登总练习次数, 5.练习平均分数, 6.考试平均分数, 8.考试成绩排名
-
 var IntStudentNumber = studentData.data.length;
-
 
 var studentNameList=[]
     for(let i = 0 ; i< IntStudentNumber ; i++){
@@ -154,14 +152,14 @@ var TotalpracticeTimes = [];
         TotalpracticeTimes.push(studentData.data[i][4])
     }
 
-var AveragePracticeScroe = [];
+var AveragePracticeScore = [];
     for(let i = 0 ; i< IntStudentNumber ; i++){
-        AveragePracticeScroe.push(studentData.data[i][5])
+      AveragePracticeScore.push(studentData.data[i][5])
     }
 
-var AverageExamScroe = [];
+var AverageExamScore = [];
     for(let i = 0 ; i< IntStudentNumber ; i++){
-        AverageExamScroe.push(studentData.data[i][6])
+      AverageExamScore.push(studentData.data[i][6])
     }
 
 var gradesRanking = [];
@@ -170,65 +168,74 @@ var gradesRanking = [];
     }
 
 // 畫圖
-
-
 var myChart
-function render(){
-    var canvas = document.getElementById('myChart').getContext('2d');
-    myChart = new Chart(canvas, {
-        type: 'bar',
-        data: {
-            labels: studentNameList,
-            datasets: [{
-                label: '',
-                data: totalLoginTimes,
-            }]
-        },
-        options: {
-            plugins:{
-                labels:{
-                    render:'value'
-                }
-            },
-            maintainAspectRatio: false,
-            scales: {
-                xAxes: [{
-                    categorySpacing: 10,
-                }]
-            }
-        },
-    });
 
+function render(){
+  var canvas = document.getElementById('myChart').getContext('2d');
+  myChart = new Chart(canvas, {
+    type: 'bar',
+    data: {
+      labels: studentNameList,
+      datasets: [{
+        label: '登入次数',
+        data: totalLoginTimes,
+      }]
+    },
+    options: {
+      plugins:{
+        labels:{
+          render:'value'
+        }
+      },
+      legend: {
+        position: 'left',
+      },
+      maintainAspectRatio: false,
+    },
+  });
 }
 render()
 
-
 // 圖表更新
-
-function ChartUpdata(newYaxisData) {
-  myChart.config.data.datasets[0].data = newYaxisData;
+function ChartUpdate(newYaxisData, labelName) {
+  var Data = [{
+    label:labelName,
+    data: newYaxisData
+  }]
+  myChart.config.data.datasets = Data
   myChart.update();
 }
+
+var Score= [
+  {
+    label: "練習平均分數",
+    backgroundColor: "pink",
+    data: AveragePracticeScore
+  },
+  {
+    label: "考試平均分數",
+    backgroundColor: "gray",
+    data: AverageExamScore
+  }
+]
 
 function changemodel(id){
     switch(id){
     case 1:
-      ChartUpdata(totalLoginTimes)
+      ChartUpdate(totalLoginTimes,"登入次数")
       break;
     case 2:
-      ChartUpdata(averageLoginTime)
+      ChartUpdate(averageLoginTime,"登入平均时长(时/次)")
       break;
     case 3:
-      ChartUpdata(TotalpracticeTimes)
+      ChartUpdate(TotalpracticeTimes,"登总练习次数")
       break;
     case 4:
-      ChartUpdata(AveragePracticeScroe)
+      myChart.config.data.datasets = Score;
+      myChart.update();
       break;
     case 5:
-      ChartUpdata(AverageExamScroe)
-      break;
-    case 6:
-      ChartUpdata(gradesRanking)
+      ChartUpdate(gradesRanking,"考试成绩排名")
       break;
     }
 };
