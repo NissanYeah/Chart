@@ -192,6 +192,7 @@ function render() {
       },
       legend: {  //把catagory註釋位置移到左側
         position: 'left',
+        onClick:function() { return false }
       },
       maintainAspectRatio: false,
     },

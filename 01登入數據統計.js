@@ -188,7 +188,8 @@ function render() {
         }
       },
       legend: { //把catagory註釋位置移到左側
-        position: 'left'
+        position: 'left',
+        onClick:function() { return false }
       },
       maintainAspectRatio: false,
     },
@@ -197,30 +198,28 @@ function render() {
 render()
 
 // 更新圖表
-function ChartUpdata(newYaxisData,labelName) {
-  myChart.config.data.datasets[0].data = newYaxisData;
+function ChartUpdate(newYaxisData,labelName) {
   myChart.config.data.datasets[0].label = labelName;
+  myChart.config.data.datasets[0].data = newYaxisData;
   myChart.update();
 }
 
 function changeChart(id) {
   switch(id) {
     case 1:
-      ChartUpdata(totalLoginTimes, "登入次數")
+      ChartUpdate(totalLoginTimes, "登入次數")
       break;
     case 2:
-      ChartUpdata(loginFrequence, "登入頻率")
+      ChartUpdate(loginFrequence, "登入頻率")
       break;
     case 3:
-      ChartUpdata(averageLoginTime, "平均登入時常")
+      ChartUpdate(averageLoginTime, "登入平均時長（時/次）")
       break;
     case 4:
-      ChartUpdata(mostLongTime, "最長時間（天）")
-      render()
+      ChartUpdate(mostLongTime, "最長時間(天)")
       break;
     case 5:
-      ChartUpdata(mostShortTime, "最短時間（天）")
-      render()
+      ChartUpdate(mostShortTime, "最短时间(天)")
       break;
   }
 };
