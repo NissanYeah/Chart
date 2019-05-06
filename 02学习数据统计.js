@@ -1,5 +1,6 @@
 
-var studentData = {"data": [
+var studentData = {
+  "data": [
     ["xx医院","陆胤燊",21,75.37,0,0,96,249,7],
     ["xx医院","刘大林",16,3.64,0,0,98.29,249,6],
     ["xx医院","陈怡婕",9,2.78,0,0,96.09,249,7],
@@ -115,62 +116,59 @@ var studentData = {"data": [
     ["xx医院","韩越",13,1.86,0,0,92.14,249,8],
     ["xx医院","吴艳萍",9,2.69,0,0,99.4,249,5],
     ["xx医院","宋佳利",13,1.87,0,0,99.5,249,4],
-    ["xx医院","admin",204,0.38,0,0,0,249,"不適用"],[],
+    ["xx医院","admin",204,0.38,0,0,0,249,"不適用"],
     ["oo医院","林婕",0,0,0,0,0,249,"不適用"],
     ["oo医院","倪瑞瑛",0,0,0,0,0,249,"不適用"],
     ["oo医院","郝达彬",0,0,0,0,0,249,"不適用"],
     ["oo医院","胡婉莹",0,0,0,0,0,249,"不適用"],
     ["oo医院","尹雪",0,0,0,0,0,249,"不適用"],
     ["oo医院","徐佳玲",0,0,0,0,0,249,"不適用"],
-    []
   ],
   "total": 124,
   "aggregates": null
 }
 
-// 取出資料
-// 0.机构名称, 1.姓名, 2.登入次数,3.登入平均时长(时/次),4.登总练习次数, 5.练习平均分数, 6.考试平均分数, 8.考试成绩排名
+// 資料格式：0.机构名称, 1.姓名, 2.登入次数,3.登入平均时长(时/次),4.登总练习次数, 5.练习平均分数, 6.考试平均分数, 8.考试成绩排名
 var IntStudentNumber = studentData.data.length;
 
 var studentNameList=[]
-    for(let i = 0 ; i< IntStudentNumber ; i++){
-    studentNameList.push(studentData.data[i][1])
-    }
+for(let i = 0 ; i< IntStudentNumber ; i++) {
+  studentNameList.push(studentData.data[i][1])
+}
 
 var totalLoginTimes = [];
-    for(let i = 0 ; i< IntStudentNumber ; i++){
-    totalLoginTimes.push(studentData.data[i][2])
-    }
+for(let i = 0 ; i< IntStudentNumber ; i++) {
+  totalLoginTimes.push(studentData.data[i][2])
+}
 
 var averageLoginTime = [];
-    for(let i = 0 ; i< IntStudentNumber ; i++){
-      averageLoginTime.push(studentData.data[i][3])
-    }
+for(let i = 0 ; i< IntStudentNumber ; i++){
+  averageLoginTime.push(studentData.data[i][3])
+}
 
 var TotalpracticeTimes = [];
-    for(let i = 0 ; i< IntStudentNumber ; i++){
-        TotalpracticeTimes.push(studentData.data[i][4])
-    }
+for(let i = 0 ; i< IntStudentNumber ; i++){
+  TotalpracticeTimes.push(studentData.data[i][4])
+}
 
 var AveragePracticeScore = [];
-    for(let i = 0 ; i< IntStudentNumber ; i++){
-      AveragePracticeScore.push(studentData.data[i][5])
-    }
+for(let i = 0 ; i< IntStudentNumber ; i++){
+  AveragePracticeScore.push(studentData.data[i][5])
+}
 
 var AverageExamScore = [];
-    for(let i = 0 ; i< IntStudentNumber ; i++){
-      AverageExamScore.push(studentData.data[i][6])
-    }
+for(let i = 0 ; i< IntStudentNumber ; i++){
+  AverageExamScore.push(studentData.data[i][6])
+}
 
 var gradesRanking = [];
-    for(let i = 0 ; i< IntStudentNumber ; i++){
-      gradesRanking.push(studentData.data[i][8])
-    }
+for(let i = 0 ; i< IntStudentNumber ; i++){
+  gradesRanking.push(studentData.data[i][8])
+}
 
-// 畫圖
+// 繪製chartJS圖表
 var myChart
-
-function render(){
+function render() {
   var canvas = document.getElementById('myChart').getContext('2d');
   myChart = new Chart(canvas, {
     type: 'bar',
@@ -182,12 +180,17 @@ function render(){
       }]
     },
     options: {
-      plugins:{
-        labels:{
+      plugins:{ 
+        labels:{ //用plugin顯示上方數據
           render:'value'
         }
       },
-      legend: {
+      layout:{
+        padding: {  //設定圖表本身上方的padding         
+          top: 30
+        }
+      },
+      legend: {  //把catagory註釋位置移到左側
         position: 'left',
       },
       maintainAspectRatio: false,
@@ -219,8 +222,8 @@ var Score= [
   }
 ]
 
-function changemodel(id){
-    switch(id){
+function changeChart(id){
+  switch(id){
     case 1:
       ChartUpdate(totalLoginTimes,"登入次数")
       break;
@@ -237,7 +240,5 @@ function changemodel(id){
     case 5:
       ChartUpdate(gradesRanking,"考试成绩排名")
       break;
-    }
+  }
 };
-
-

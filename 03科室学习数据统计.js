@@ -29,88 +29,86 @@ var studentData ={
     ["xx医院","介入肿瘤科",4,32.5,0.62,1.25,0.25,25.85,249],
     ["xx医院","中医肝",3,9,2.01,0,0,66.48,22494],
     ["xx医院","中医内科",1,29,0.85,0,0,99.53,22494],
-    [],
     ["oo医院","康复医学科",1,0,0,0,0,0,249],
     ["oo医院","体检科",1,0,0,0,0,0,249]],
-    "total": 124,
+  "total": 124,
   "aggregates": null
 };
 
-// 取出資料
-// 0.机构名称, 1.科室, 2.科室人数,3.登入次数,4.登入平均时长(时/次), 5.总练习次数, 6.练习平均分数, 7.考试平均分数
+// 資料格式：0.机构名称, 1.科室, 2.科室人数,3.登入次数,4.登入平均时长(时/次), 5.总练习次数, 6.练习平均分数, 7.考试平均分数
 var IntStudentNumber = studentData.data.length;
 
 var HospitalName=[]
-    for(let i = 0 ; i< IntStudentNumber ; i++){
-      HospitalName.push(studentData.data[i][0])
-    }
+for(let i = 0 ; i< IntStudentNumber ; i++){
+  HospitalName.push(studentData.data[i][0])
+}
 
 var departmentNameList=[]
-    for(let i = 0 ; i< IntStudentNumber ; i++){
-      departmentNameList.push(studentData.data[i][1])
-    }
+for(let i = 0 ; i< IntStudentNumber ; i++){
+  departmentNameList.push(studentData.data[i][1])
+}
 
 var numberOfdepartments = [];
-    for(let i = 0 ; i< IntStudentNumber ; i++){
-      numberOfdepartments.push(studentData.data[i][2])
-    }
+for(let i = 0 ; i< IntStudentNumber ; i++){
+  numberOfdepartments.push(studentData.data[i][2])
+}
 
 var totalLoginTimes = [];
-    for(let i = 0 ; i< IntStudentNumber ; i++){
-      totalLoginTimes.push(studentData.data[i][3])
-    }
+for(let i = 0 ; i< IntStudentNumber ; i++){
+  totalLoginTimes.push(studentData.data[i][3])
+}
 
 var averageLoginTime = [];
-    for(let i = 0 ; i< IntStudentNumber ; i++){
-      averageLoginTime.push(studentData.data[i][4])
-    }
+for(let i = 0 ; i< IntStudentNumber ; i++){
+  averageLoginTime.push(studentData.data[i][4])
+}
 
 var totalPracticeTimes = [];
-    for(let i = 0 ; i< IntStudentNumber ; i++){
-      totalPracticeTimes.push(studentData.data[i][5])
-    }
+for(let i = 0 ; i< IntStudentNumber ; i++){
+  totalPracticeTimes.push(studentData.data[i][5])
+}
 
 var averagePracticeScore = [];
-    for(let i = 0 ; i< IntStudentNumber ; i++){
-      averagePracticeScore.push(studentData.data[i][6])
-    }
+for(let i = 0 ; i< IntStudentNumber ; i++){
+  averagePracticeScore.push(studentData.data[i][6])
+}
 
 var averageExamScore = [];
-    for(let i = 0 ; i< IntStudentNumber ; i++){
-      averageExamScore.push(studentData.data[i][7])
-    }
+for(let i = 0 ; i< IntStudentNumber ; i++){
+  averageExamScore.push(studentData.data[i][7])
+}
 
 // 建構圖表
 var myChart
 function render() {
   var canvas = document.getElementById('myChart').getContext('2d');
   myChart = new Chart(canvas, {
-              type: 'bar',
-              data: {
-                labels: departmentNameList,
-                datasets: [{
-                  label: '科室人數',
-                  data: numberOfdepartments,
-                }]
-              },
-              options: {
-                plugins:{
-                  labels:{
-                    render:'value',
-                  }
-                },
-                legend: {
-                  position: 'left'
-                },
-                maintainAspectRatio: false,
-                scales: {
-                  xAxes: [{
-                    categorySpacing: 10,
-                  }]
-                }
-              },
-              });
-  }
+    type: 'bar',
+    data: {
+      labels: departmentNameList,
+      datasets: [{
+        label: '科室人數',
+        data: numberOfdepartments,
+      }]
+    },
+    options: {
+      plugins: {
+        labels: { //用plugin顯示上方數據
+          render:'value',
+        },
+      },
+      layout:{ //設定圖表本身上方的padding
+        padding: {           
+          top: 30
+        }
+      },
+      legend: { //把catagory註釋位置移到左側
+        position: 'left'
+      },
+      maintainAspectRatio: false,
+    },
+  });
+}
 render()
 
 // 圖表更新
@@ -136,7 +134,7 @@ var Score= [
   }
 ]
 
-function changemodel(id){
+function changeChart(id){
     switch(id){
     case 1:
       ChartUpdata(numberOfdepartments,"科室人数")
